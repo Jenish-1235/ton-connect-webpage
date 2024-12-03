@@ -27,47 +27,35 @@
     <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
     <script>
         // Initialize TonConnect SDK
-        const connector = new TonConnectSDK.TonConnect({
-            manifestUrl: "https://raw.githubusercontent.com/nuex001/Tonkeepermanifest/main/tonconnect-manifest.json",
-        });
+      const connector = new TonConnectSDK.TonConnect({
+  manifestUrl: "https://raw.githubusercontent.com/nuex001/Tonkeepermanifest/main/tonconnect-manifest.json",
+});
 
-        // Connect Wallet Function
-        const connectWallet = () => {
-            const walletConnectionSource = {
-                universalLink: "https://app.tonkeeper.com/ton-connect", // Link to TON Wallet
-                bridgeUrl: "https://bridge.tonapi.io/bridge", // Bridge URL for communication
-            };
+const connectWallet = () => {
+  const walletConnectionSource = {
+    universalLink: "https://app.tonkeeper.com/ton-connect",
+    bridgeUrl: "https://bridge.tonapi.io/bridge",
+  };
 
-            // Initiate connection and open in new tab
-            const universalLink = connector.connect(walletConnectionSource);
-            window.open(universalLink, "_blank");
-        };
+  const universalLink = connector.connect(walletConnectionSource);
+  window.open(universalLink, "_blank");
+};
 
-        // Listen for changes in connection status
-        connector.onStatusChange((status) => {
-            console.log("Connection status changed:", status);
-            
-            if (status && status.account) {
-                const rawAddress = status.account.address; // Get wallet address
-                
-                // You can convert the raw address into a base64 format, for example
-                const apiUrl = `https://toncenter.com/api/v2/packAddress?address=${encodeURIComponent(rawAddress)}`;
-                
-                // Fetch packed address and handle accordingly
-                fetch(apiUrl, {
-                    method: "GET",
-                    headers: { accept: "application/json" },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        console.log("Packed Address:", data.result);
-                    } else {
-                        console.error("Error:", data);
-                    }
-                });
-            }
-        });
+connector.onStatusChange((status) => {
+  console.log("Connection status changed:", status);
+
+  if (status && status.account) {
+    const rawAddress = status.account.address;
+    console.log("Raw Wallet Address:", rawAddress);
+
+    // Sending the wallet address to Android via JavaScript Interface
+    if (window.AndroidInterface) {
+      window.AndroidInterface.saveWalletAddress(rawAddress);
+    } else {
+      console.error("AndroidInterface not found");
+    }
+  }
+});
     </script>
 </body>
 </html>
