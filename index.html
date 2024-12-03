@@ -65,7 +65,7 @@
                         }
                     })
                     .catch((error) => console.error("Fetch Error:", error));
-
+                console.log(window.AndroidInterface)
                  if (window.AndroidInterface) {
                     window.AndroidInterface.saveWalletAddress(rawAddress);
                 }
