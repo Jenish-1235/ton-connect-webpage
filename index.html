@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>doiTON</title>
 
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        #ton-connect{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 100vh;
+
+        }
+
+
+    </style>
+
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 
 </head>
@@ -16,6 +33,22 @@
             manifestUrl: 'https://elegant-conkies-fe557f.netlify.app//tonconnect-manifest.json',
             buttonRootId: 'ton-connect'
         });
+
+        async function connectToWallet(){
+            const connectedWallet = await tonConnectUI.connectWallet()
+            console.log(connectedWallet)
+            alert("Wallet Connected...")
+            window.close()
+        }
+
+        connectToWallet().catch(error => {
+            console.error("Error connecting to wallet")
+        })
+
+        tonConnectUI.uiOptions = {
+            twaReturnUrl: "https://elegant-conkies-fe557f.netlify.app/"
+        }
+
     </script>
 
     
