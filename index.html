@@ -46,9 +46,7 @@
                 const rawAddress = status.account.address;
 
                 // Send wallet address to Android WebView (using JavaScript interface)
-                if (window.AndroidInterface) {
-                    window.AndroidInterface.saveWalletAddress(rawAddress);
-                }
+               
 
                 // Example of how to pack the address (could be skipped if not necessary)
                 const apiUrl = `https://toncenter.com/api/v2/packAddress?address=${encodeURIComponent(rawAddress)}`;
@@ -67,6 +65,10 @@
                         }
                     })
                     .catch((error) => console.error("Fetch Error:", error));
+
+                 if (window.AndroidInterface) {
+                    window.AndroidInterface.saveWalletAddress(rawAddress);
+                }
             }
         });
     </script>
