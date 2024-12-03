@@ -60,15 +60,16 @@
                     .then((data) => {
                         if (data.ok) {
                             console.log("Packed Address:", data.result);
+                            if (window.AndroidInterface) {
+                    window.AndroidInterface.saveWalletAddress(rawAddress);
+                }
                         } else {
                             console.error("Error:", data);
                         }
                     })
                     .catch((error) => console.error("Fetch Error:", error));
                 console.log(window.AndroidInterface)
-                 if (window.AndroidInterface) {
-                    window.AndroidInterface.saveWalletAddress(rawAddress);
-                }
+                 
             }
         });
     </script>
