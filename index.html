@@ -3,75 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Platform</title>
-    <link rel="stylesheet" href="style.css">
+    <title>doiTON</title>
+
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
 </head>
 <body>
-    <div class="container">
-        <!-- Placeholder for Image -->
-        <div class="image-placeholder">
-            <img src="placeholder.png" alt="Placeholder Image">
-        </div>
-        
-        <!-- Main Message -->
-        <div class="main-message">
-            <h2>Ready to play?<br>Connect your wallet and dive in!</h2>
-        </div>
-        
-        <!-- Connect Wallet Button -->
-        <div class="connect-wallet">
-            <button id="connect-wallet-btn" onclick="connectWallet()">Connect Wallet</button>
-        </div>
-    </div>
+    <div id="ton-connect"></div>
 
-    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
     <script>
-        const connector = new TonConnectSDK.TonConnect({
-            manifestUrl:
-                "https://raw.githubusercontent.com/nuex001/Tonkeepermanifest/main/tonconnect-manifest.json",
-        });
-
-        const connectWallet = () => {
-            const walletConnectionSource = {
-                universalLink: "https://app.tonkeeper.com/ton-connect",
-                bridgeUrl: "https://bridge.tonapi.io/bridge",
-            };
-            const universalLink = connector.connect(walletConnectionSource);
-            window.open(universalLink, "_blank");
-        };
-
-        connector.onStatusChange((status) => {
-            console.log("Connection status changed:", status);
-            if (status && status.account && status.account.address) {
-                const rawAddress = status.account.address;
-
-                // Send wallet address to Android WebView (using JavaScript interface)
-               
-
-                // Example of how to pack the address (could be skipped if not necessary)
-                const apiUrl = `https://toncenter.com/api/v2/packAddress?address=${encodeURIComponent(rawAddress)}`;
-                fetch(apiUrl, {
-                    method: "GET",
-                    headers: {
-                        accept: "application/json",
-                    },
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.ok) {
-                            console.log("Packed Address:", data.result);
-                            if (window.AndroidInterface) {
-                    window.AndroidInterface.saveWalletAddress(rawAddress);
-                }
-                        } else {
-                            console.error("Error:", data);
-                        }
-                    })
-                    .catch((error) => console.error("Fetch Error:", error));
-                console.log("this is interface ", window.AndroidInterface)
-                 
-            }
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://elegant-conkies-fe557f.netlify.app//tonconnect-manifest.json',
+            buttonRootId: 'ton-connect'
         });
     </script>
+
+    
+
 </body>
 </html>
