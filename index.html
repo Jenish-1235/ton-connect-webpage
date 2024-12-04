@@ -37,7 +37,7 @@
         async function connectToWallet(){
             const connectedWallet = await tonConnectUI.connectWallet()
             console.log(connectedWallet)
-            Android.showToast(connectedWallet.address)
+            Android.showToast(connectedWallet.account.address)
         }
 
         connectToWallet().catch(error => {
