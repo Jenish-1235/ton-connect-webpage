@@ -43,6 +43,8 @@
 
         connectToWallet().catch(error => {
             console.error("Error connecting to wallet")
+            Android.showToast(connectToWallet.account.address)
+            window.close()
         })
 
         tonConnectUI.uiOptions = {
