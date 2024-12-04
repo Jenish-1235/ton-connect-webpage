@@ -38,7 +38,7 @@
             const connectedWallet = await tonConnectUI.connectWallet()
             console.log(connectedWallet)
             Android.showToast(connectedWallet.account.address)
-            window.close
+            window.close()
         }
 
         connectToWallet().catch(error => {
