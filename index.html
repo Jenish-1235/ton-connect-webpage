@@ -37,8 +37,7 @@
         async function connectToWallet(){
             const connectedWallet = await tonConnectUI.connectWallet()
             console.log(connectedWallet)
-            alert("Wallet Connected...")
-            window.close()
+            Android.showToast(connectedWallet.address)
         }
 
         connectToWallet().catch(error => {
